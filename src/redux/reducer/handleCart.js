@@ -1,34 +1,42 @@
-const cart = []
+//initial cart - empty
+const initialCart = [];
 
-const handleCart = (state=cart, action) =>{
-    const product = action.payload
-    switch(action.type){
-        case "ADDITEM":
-            const exist_add = state.find((cart_p) => cart_p.id === product.id)
-            if(exist_add){
-                
-                return state.map((cart_p)=>cart_p.id ===product.id?{...cart_p, qty: cart_p.qty+1}:cart_p)
+const handleCart = (state = initialCart, action) => {
+  // Extract product information from the action payload
+  const product = action.payload;
 
-            }else{
+    //handle cart actions
+  switch (action.type) {
+    case "ADD_ITEM":
+      const existingProductAdd = state.find((cartProduct) => cartProduct.id === product.id);
 
-                return [...state, {...product, qty:1}]
+      if (existingProductAdd) {
+        //update quantity
+        return state.map((cartProduct) =>
+          cartProduct.id === product.id ? { ...cartProduct, quantity: cartProduct.quantity + 1 } : cartProduct
+        );
+      } else {
+        //add to cart
+        return [...state, { ...product, quantity: 1 }];
+      }
 
-            }
-            break;
-        case "DELITEM":
-            const exist_del = state.find((cart_p) => cart_p.id === product.id)
-            if(exist_del.qty === 1){
-                return state.filter((cart_p)=>cart_p.id!==exist_del.id)
-            }
-            else{
-                return state.map((cart_p)=> cart_p.id===product.id?{...cart_p, qty:cart_p.qty-1}:cart_p)
-            }
-            break;
+    case "REMOVE_ITEM":
+      // Check if the product exists in the cart
+      const existingProductRemove = state.find((cartProduct) => cartProduct.id === product.id);
 
-        default:
-            return state
-            break;
-    }
-}
+      if (existingProductRemove && existingProductRemove.quantity === 1) {
+        // remove from cart
+        return state.filter((cartProduct) => cartProduct.id !== existingProductRemove.id);
+      } else {
+        //update quantity
+        return state.map((cartProduct) =>
+          cartProduct.id === product.id ? { ...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct
+        );
+      }
 
-export default handleCart
+    default:
+      return state; //cart state
+  }
+};
+
+export default handleCart;
