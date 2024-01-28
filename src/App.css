@@ -13,6 +13,11 @@
   }
 }
 
+.head {
+  font-family: 'Helvetica', Helvetica, monospace;
+  font-size: 32px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
