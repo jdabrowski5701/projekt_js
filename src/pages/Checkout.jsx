@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState }from "react";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { resetCart } from "../redux/action/index.js";
 
 const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
+  const dispatch = useDispatch();
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  
 
   const EmptyCart = () => {
     return (
@@ -13,7 +21,7 @@ const Checkout = () => {
           <div className="col-md-12 py-5 bg-light text-center">
             <h4 className="p-3 display-5">No item in Cart</h4>
             <Link to="/" className="btn btn-outline-dark mx-4">
-              <i className="fa fa-arrow-left"></i> Continue Shopping
+            <i className="bi bi-arrow-left"></i> Continue Shopping
             </Link>
           </div>
         </div>
@@ -23,17 +31,47 @@ const Checkout = () => {
 
   const ShowCheckout = () => {
     let subtotal = 0;
-    let shipping = 30.0;
+    let shipping = 15.0;
     let totalItems = 0;
     state.map((item) => {
-      return (subtotal += item.price * item.qty);
+      return (subtotal += item.price * item.quantity);
     });
 
     state.map((item) => {
-      return (totalItems += item.qty);
+      return (totalItems += item.quantity);
     });
+
+    const countries = ["Poland", "Germany", "France", "Spain", "UK", "Denmark"];
+
+    const statesByCountry = {
+      Poland: ["Podlasie", "Wielkopolska", "Mazowsze"],
+      Germany: ["Bavaria", "North Rhine-Westphalia", "Baden-Württemberg"],
+      France: ["Île-de-France", "Provence-Alpes-Côte d'Azur", "Auvergne-Rhône-Alpes"],
+      Spain: ["Catalonia", "Andalusia", "Madrid"],
+      UK: ["England", "Scotland", "Wales"],
+      Denmark: ["Capital Region", "Central Denmark Region", "Southern Denmark"]
+    };
+
+    const handleCountryChange = (e) => {
+      setSelectedCountry(e.target.value);
+      setSelectedState(""); 
+    };
+
+    const handleCheckout = (e) => {
+      e.preventDefault();
+
+      setIsOrderPlaced(true);
+      dispatch(resetCart());
+    };
+
+
     return (
       <>
+        {isOrderPlaced ? (
+          <div className="text-center">
+            <h2>Order placed successfully!</h2>
+          </div>
+        ) : (
         <div className="container py-5">
           <div className="row my-4">
             <div className="col-md-5 col-lg-4 order-md-last">
@@ -127,7 +165,7 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="address"
-                          placeholder="1234 Main St"
+                          placeholder="Street 1234"
                           required
                         />
                         <div className="invalid-feedback">
@@ -153,26 +191,46 @@ const Checkout = () => {
                           Country
                         </label>
                         <br />
-                        <select className="form-select" id="country" required>
-                          <option value="">Choose...</option>
-                          <option>India</option>
+                        <select
+                          className="form-select"
+                          id="country"
+                          value={selectedCountry}
+                          onChange={handleCountryChange}
+                          required
+                        >
+                          <option value="">Choose country</option>
+                          {countries.map((country, index) => (
+                            <option key={index} value={country}>
+                              {country}
+                            </option>
+                          ))}
                         </select>
                         <div className="invalid-feedback">
                           Please select a valid country.
                         </div>
                       </div>
-
                       <div className="col-md-4 my-1">
-                        <label for="state" className="form-label">
+                        <label htmlFor="state" className="form-label">
                           State
                         </label>
                         <br />
-                        <select className="form-select" id="state" required>
-                          <option value="">Choose...</option>
-                          <option>Punjab</option>
+                        <select
+                          className="form-select"
+                          id="state"
+                          value={selectedState}
+                          onChange={(e) => setSelectedState(e.target.value)}
+                          required
+                        >
+                          <option value="">Choose state/province</option>
+                          {statesByCountry[selectedCountry] &&
+                            statesByCountry[selectedCountry].map((state, index) => (
+                              <option key={index} value={state}>
+                                {state}
+                              </option>
+                            ))}
                         </select>
                         <div className="invalid-feedback">
-                          Please provide a valid state.
+                          Please select a valid state/province.
                         </div>
                       </div>
 
@@ -270,16 +328,19 @@ const Checkout = () => {
 
                     <button
                       className="w-100 btn btn-primary "
-                      type="submit" disabled
-                    >
-                      Continue to checkout
-                    </button>
-                  </form>
+                       type="submit"
+                        onClick={handleCheckout}
+                        disabled={isOrderPlaced}
+                      >
+                        Continue to checkout
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </>
     );
   };

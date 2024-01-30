@@ -33,6 +33,9 @@ const handleCart = (state = initialCart, action) => {
           cartProduct.id === product.id ? { ...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct
         );
       }
+    
+    case "RESET_CART":
+        return []; 
 
     default:
       return state; //cart state

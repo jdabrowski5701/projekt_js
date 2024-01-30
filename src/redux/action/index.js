@@ -13,3 +13,10 @@ export const delCart = (product) => {
         payload:product
     }
 }
+
+//reset cart
+export const resetCart = () => {
+    return {
+      type: "RESET_CART",
+    };
+  };

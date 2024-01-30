@@ -11,12 +11,14 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   let componentMounted = true;
 
   const dispatch = useDispatch();
 
   const addProduct = (product) => {
     dispatch(addCart(product))
+    setIsModalOpen(true);
   }
 
   useEffect(() => {
@@ -28,6 +30,10 @@ const Products = () => {
         setFilter(await response.json());
         setLoading(false);
       }
+
+      const timer = setTimeout(() => {
+        setIsModalOpen(false);
+      }, 5000);
 
       return () => {
         componentMounted = false;
@@ -102,8 +108,6 @@ const Products = () => {
                 </div>
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item lead">$ {product.price}</li>
-                  {/* <li className="list-group-item">Dapibus ac facilisis in</li>
-                    <li className="list-group-item">Vestibulum at eros</li> */}
                 </ul>
                 <div className="card-body">
                   <Link to={"/product/" + product.id} className="btn btn-dark m-1">
@@ -133,6 +137,33 @@ const Products = () => {
         <div className="row justify-content-center">
           {loading ? <Loading /> : <ShowProducts />}
         </div>
+        {isModalOpen && (
+          <div className="modal" tabIndex="-1" role="dialog" style={{ display: "block" }}>
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Item added to cart!</h5>
+                </div>
+                <div className="modal-body">
+                  <p>Your item has been successfully added to the cart.</p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Close
+                  </button>
+                  <Link to="/cart" className="btn btn-primary">
+                    Proceed to Cart
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
