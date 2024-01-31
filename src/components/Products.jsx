@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
 
 import Skeleton from "react-loading-skeleton";
@@ -12,14 +12,18 @@ const Products = () => {
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const cart = useSelector((cart) => cart.handleCart);
   let componentMounted = true;
-
   const dispatch = useDispatch();
 
   const addProduct = (product) => {
     dispatch(addCart(product))
     setIsModalOpen(true);
   }
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+    }, [cart])
 
   useEffect(() => {
     const getProducts = async () => {

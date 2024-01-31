@@ -1,35 +1,35 @@
 //initial cart - empty
-const initialCart = [];
+const initialCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-const handleCart = (state = initialCart, action) => {
+const handleCart = (cart = initialCart, action) => {
   // Extract product information from the action payload
   const product = action.payload;
 
     //handle cart actions
   switch (action.type) {
     case "ADD_ITEM":
-      const existingProductAdd = state.find((cartProduct) => cartProduct.id === product.id);
+      const existingProductAdd = cart.find((cartProduct) => cartProduct.id === product.id);
 
       if (existingProductAdd) {
         //update quantity
-        return state.map((cartProduct) =>
+        return cart.map((cartProduct) =>
           cartProduct.id === product.id ? { ...cartProduct, quantity: cartProduct.quantity + 1 } : cartProduct
         );
       } else {
         //add to cart
-        return [...state, { ...product, quantity: 1 }];
+        return [...cart, { ...product, quantity: 1 }];
       }
 
     case "REMOVE_ITEM":
       // Check if the product exists in the cart
-      const existingProductRemove = state.find((cartProduct) => cartProduct.id === product.id);
+      const existingProductRemove = cart.find((cartProduct) => cartProduct.id === product.id);
 
       if (existingProductRemove && existingProductRemove.quantity === 1) {
         // remove from cart
-        return state.filter((cartProduct) => cartProduct.id !== existingProductRemove.id);
+        return cart.filter((cartProduct) => cartProduct.id !== existingProductRemove.id);
       } else {
         //update quantity
-        return state.map((cartProduct) =>
+        return cart.map((cartProduct) =>
           cartProduct.id === product.id ? { ...cartProduct, quantity: cartProduct.quantity - 1 } : cartProduct
         );
       }
@@ -38,7 +38,7 @@ const handleCart = (state = initialCart, action) => {
         return []; 
 
     default:
-      return state; //cart state
+      return cart; 
   }
 };
 

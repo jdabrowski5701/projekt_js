@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { addCart, delCart } from "../redux/action";
 
 const Cart = () => {
-  const state = useSelector((state) => state.handleCart);
+  const cart = useSelector((cart) => cart.handleCart);
   const dispatch = useDispatch();
+
+    useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+    }, [cart])
+    
 
   const EmptyCart = () => {
     return (
@@ -34,11 +39,11 @@ const Cart = () => {
     let subtotal = 0;
     let shipping = 15.0;
     let totalItems = 0;
-    state.map((item) => {
+    cart.map((item) => {
       return (subtotal += item.price * item.quantity);
     });
 
-    state.map((item) => {
+    cart.map((item) => {
       return (totalItems += item.quantity);
     });
     return (
@@ -52,7 +57,7 @@ const Cart = () => {
                     <h5 className="mb-0">Item List</h5>
                   </div>
                   <div className="card-body">
-                    {state.map((item) => {
+                    {cart.map((item) => {
                       return (
                         <div key={item.id}>
                           <div className="row d-flex align-items-center">
@@ -90,7 +95,7 @@ const Cart = () => {
                                     removeItem(item);
                                   }}
                                 >
-                                  <i className="bi bi-dash-lg"></i>
+                                  <i className="bi bi-dash-lg">-</i>
                                 </button>
 
                                 <p className="mx-5">{item.quantity}</p>
@@ -101,7 +106,7 @@ const Cart = () => {
                                     addItem(item);
                                   }}
                                 >
-                                  <i className="bi bi-plus-lg"></i>
+                                  <i className="bi bi-plus-lg">+</i>
                                 </button>
                               </div>
 
@@ -167,7 +172,7 @@ const Cart = () => {
       <div className="container my-3 py-3">
         <h1 className="text-center">Cart</h1>
         <hr />
-        {state.length > 0 ? <ShowCart /> : <EmptyCart />}
+        {cart.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
     </>
   );
