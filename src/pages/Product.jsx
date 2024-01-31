@@ -53,7 +53,10 @@ const Product = () => {
               <h1 className="display-5">{product.title}</h1>
               <p className="lead">
                 <i className="bi bi-star-fill"></i>
-                {" "}{product.rating && product.rating.rate}
+                {" "}{product.rating && product.rating.rate}{" "}
+                
+                <i className="bi bi-bag-heart"></i>
+                {" Orders: "}{product.rating && product.rating.count}
                 
               </p>
               <h3 className="display-6  my-4">${product.price}</h3>
