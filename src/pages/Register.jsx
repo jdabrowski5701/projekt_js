@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../components";
 
 const Register = () => {
@@ -15,12 +16,14 @@ const Register = () => {
         password: "",
     });
 
+    const navigate = useNavigate();
+
     const handleChange = (ev) => {
         setFormData({ ...formData, [ev.target.id]: ev.target.value });
         setErrors({ ...errors, [ev.target.id]: "" });
     };
 
-    const handleSubmit = (ev) => {
+    const handleSubmit = async (ev) => {
         ev.preventDefault();
 
         let valid = true;
@@ -62,9 +65,23 @@ const Register = () => {
         }
 
         if (valid) {
-            // Add your form submission logic here
-            console.log("Thank you :", formData);
-        }
+            try {
+              const response = await axios.post("YOUR_BACKEND_API_LOGIN_ENDPOINT", {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+              });
+      
+              const { token } = response.data;
+              localStorage.setItem("jwtToken", token);
+
+              navigate("/");
+
+            } catch (error) {
+              alert("Registration failed!");
+      
+            }
+          }
     };
 
     return (
@@ -82,7 +99,6 @@ const Register = () => {
                                     type="text"
                                     className={`form-control ${errors.name && "is-invalid"}`}
                                     id="name"
-                                    placeholder="Enter Your Name"
                                     value={formData.name}
                                     onChange={handleChange}
                                 />
@@ -94,7 +110,6 @@ const Register = () => {
                                     type="email"
                                     className={`form-control ${errors.email && "is-invalid"}`}
                                     id="email"
-                                    placeholder="name@example.com"
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
@@ -106,7 +121,6 @@ const Register = () => {
                                     type="password"
                                     className={`form-control ${errors.password && "is-invalid"}`}
                                     id="password"
-                                    placeholder="Password"
                                     value={formData.password}
                                     onChange={handleChange}
                                 />
