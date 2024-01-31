@@ -1,5 +1,4 @@
 import React from "react";
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
 import { useSelector, useDispatch } from "react-redux";

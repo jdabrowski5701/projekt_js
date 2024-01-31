@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
 import { useSelector } from "react-redux";
