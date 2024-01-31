@@ -74,7 +74,7 @@ const Register = () => {
       
               const { token } = response.data;
               localStorage.setItem("jwtToken", token);
-
+              alert("Registration successful!");
               navigate("/");
 
             } catch (error) {

@@ -67,6 +67,18 @@
       "name": "Jas Fasola",
       "email": "name@example.com",
       "password": "password123!"
+    },
+    {
+      "id": "2972",
+      "name": "Jan Kowalski",
+      "email": "jankowal@gmail.com",
+      "password": "password123!"
+    },
+    {
+      "id": "4f6a",
+      "name": "Test",
+      "email": "test@test.com",
+      "password": "test123!"
     }
   ],
   "orders": {}

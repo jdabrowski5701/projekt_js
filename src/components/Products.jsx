@@ -83,6 +83,13 @@ const Products = () => {
     return (
       <>
 
+        <div className="buttons text-center py-3">
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("hoodies")}>Hoodies</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("shirts")}>Shirts</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
+        </div>
+
         {filter.map((product) => {
           return (
             <div id={product.id} key={product.id} className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
