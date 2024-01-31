@@ -14,6 +14,20 @@ const Checkout = () => {
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   
 
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    country: "",
+    state: "",
+    zip: "",
+    cardName: "",
+    cardNumber: "",
+    cardExpiration: "",
+    cardCVV: "",
+  });
+
   const EmptyCart = () => {
     return (
       <div className="container">
@@ -59,6 +73,66 @@ const Checkout = () => {
 
     const handleCheckout = (e) => {
       e.preventDefault();
+
+      if (!e.target.firstName.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, firstName: "First name is required" }));
+        return;
+      }
+
+      if (!e.target.lastName.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, lastName: "Last name is required" }));
+        return;
+      }
+
+      const emailRegex = /\S+@\S+\.\S+/;
+      if (!e.target.email.value.trim() || !emailRegex.test(e.target.email.value)) {
+        setErrors((prevErrors) => ({ ...prevErrors, email: "Please enter a valid email address" }));
+        return;
+      }
+
+      if (!e.target.address.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, address: "Address is required" }));
+        return;
+      }
+
+      if (!selectedCountry) {
+        setErrors((prevErrors) => ({ ...prevErrors, country: "Please select a valid country" }));
+        return;
+      }
+
+      if (!selectedState) {
+        setErrors((prevErrors) => ({ ...prevErrors, state: "Please select a valid state/province" }));
+        return;
+      }
+
+      const zipRegex = /^\d+$/;
+      if (!e.target.zip.value || !zipRegex.test(e.target.zip.value)) {
+        setErrors((prevErrors) => ({ ...prevErrors, zip: "Zip code must contain only numbers" }));
+        return;
+      }
+
+      if (!e.target.cardName.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, cardName: "Name on card is required" }));
+        return;
+      }
+
+      const cardNumberRegex = /^\d{16}$/;
+      if (!e.target.cardNumber.value || !cardNumberRegex.test(e.target.cardNumber.value)) {
+        setErrors((prevErrors) => ({ ...prevErrors, cardNumber: "Credit card number must be 16 digits long and contain only numbers" }));
+        return;
+      }
+
+      const expirationRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      if (!e.target.cardExpiration.value || !expirationRegex.test(e.target.cardExpiration.value)) {
+        setErrors((prevErrors) => ({ ...prevErrors, cardExpiration: "Expiration date must be in format MM/YY" }));
+        return;
+      }
+
+      const cvvRegex = /^\d{3}$/;
+      if (!e.target.cardCVV.value || !cvvRegex.test(e.target.cardCVV.value)) {
+        setErrors((prevErrors) => ({ ...prevErrors, cardCVV: "CVV must be 3 digits long and contain only numbers" }));
+        return;
+      }
 
       setIsOrderPlaced(true);
       dispatch(resetCart());
@@ -106,7 +180,7 @@ const Checkout = () => {
                   <h4 className="mb-0">Billing address</h4>
                 </div>
                 <div className="card-body">
-                  <form className="needs-validation" novalidate>
+                  <form className="needs-validation" novalidate onSubmit={handleCheckout}>
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
                         <label for="firstName" className="form-label">

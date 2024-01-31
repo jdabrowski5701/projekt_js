@@ -66,7 +66,7 @@ const Register = () => {
 
         if (valid) {
             try {
-              const response = await axios.post("YOUR_BACKEND_API_LOGIN_ENDPOINT", {
+              const response = await axios.post("http://localhost:8000/users", {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,
