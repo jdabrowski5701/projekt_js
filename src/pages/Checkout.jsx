@@ -1,4 +1,4 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
@@ -13,6 +13,19 @@ const Checkout = () => {
   const [selectedState, setSelectedState] = useState("");
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    country: "",
+    state: "",
+    zip: "",
+    cardName: "",
+    cardNumber: "",
+    cardExpiration: "",
+    cardCVV: "",
+  });
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -67,9 +80,17 @@ const Checkout = () => {
     };
 
     const handleCountryChange = (e) => {
-      setSelectedCountry(e.target.value);
-      setSelectedState(""); 
+      const selectedCountryValue = e.target.value;
+      setSelectedCountry(selectedCountryValue);
+      setSelectedState("");
     };
+
+    const handleChange = (ev) => {
+      setFormData({ ...formData, [ev.target.id]: ev.target.value });
+      setErrors({ ...errors, [ev.target.id]: "" });
+    };
+
+
 
     const handleCheckout = (e) => {
       e.preventDefault();
@@ -180,7 +201,7 @@ const Checkout = () => {
                   <h4 className="mb-0">Billing address</h4>
                 </div>
                 <div className="card-body">
-                  <form className="needs-validation" novalidate onSubmit={handleCheckout}>
+                  <form onSubmit={handleCheckout}>
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
                         <label for="firstName" className="form-label">
@@ -188,14 +209,18 @@ const Checkout = () => {
                         </label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.firstName && "is-invalid"}`}
                           id="firstName"
                           placeholder=""
                           required
+                          value={formData.firstName}
+                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Valid first name is required.
-                        </div>
+                        {errors.firstName && (
+                          <div className="invalid-feedback">
+                            {errors.firstName}
+                          </div>
+                        )}
                       </div>
 
                       <div className="col-sm-6 my-1">
@@ -208,6 +233,8 @@ const Checkout = () => {
                           id="lastName"
                           placeholder=""
                           required
+                          value={formData.lastName}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Valid last name is required.
@@ -224,6 +251,8 @@ const Checkout = () => {
                           id="email"
                           placeholder="you@example.com"
                           required
+                          value={formData.email}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Please enter a valid email address for shipping
@@ -241,6 +270,8 @@ const Checkout = () => {
                           id="address"
                           placeholder="Street 1234"
                           required
+                          value={formData.address}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Please enter your shipping address.
@@ -257,56 +288,11 @@ const Checkout = () => {
                           className="form-control"
                           id="address2"
                           placeholder="Apartment or suite"
+                          value={formData.address2}
+                          onChange={handleChange}
                         />
                       </div>
 
-                      <div className="col-md-5 my-1">
-                        <label for="country" className="form-label">
-                          Country
-                        </label>
-                        <br />
-                        <select
-                          className="form-select"
-                          id="country"
-                          value={selectedCountry}
-                          onChange={handleCountryChange}
-                          required
-                        >
-                          <option value="">Choose country</option>
-                          {countries.map((country, index) => (
-                            <option key={index} value={country}>
-                              {country}
-                            </option>
-                          ))}
-                        </select>
-                        <div className="invalid-feedback">
-                          Please select a valid country.
-                        </div>
-                      </div>
-                      <div className="col-md-4 my-1">
-                        <label htmlFor="state" className="form-label">
-                          State
-                        </label>
-                        <br />
-                        <select
-                          className="form-select"
-                          id="state"
-                          value={selectedState}
-                          onChange={(e) => setSelectedState(e.target.value)}
-                          required
-                        >
-                          <option value="">Choose state/province</option>
-                          {statesByCountry[selectedCountry] &&
-                            statesByCountry[selectedCountry].map((state, index) => (
-                              <option key={index} value={state}>
-                                {state}
-                              </option>
-                            ))}
-                        </select>
-                        <div className="invalid-feedback">
-                          Please select a valid state/province.
-                        </div>
-                      </div>
 
                       <div className="col-md-3 my-1">
                         <label for="zip" className="form-label">
@@ -318,6 +304,8 @@ const Checkout = () => {
                           id="zip"
                           placeholder=""
                           required
+                          value={formData.zip}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Zip code required.
@@ -340,6 +328,8 @@ const Checkout = () => {
                           id="cc-name"
                           placeholder=""
                           required
+                          value={formData.cardName}
+                          onChange={handleChange}
                         />
                         <small className="text-muted">
                           Full name as displayed on card
@@ -359,6 +349,8 @@ const Checkout = () => {
                           id="cc-number"
                           placeholder=""
                           required
+                          value={formData.cardNumber}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Credit card number is required
@@ -375,6 +367,8 @@ const Checkout = () => {
                           id="cc-expiration"
                           placeholder=""
                           required
+                          value={formData.cardExpiration}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Expiration date required
@@ -391,6 +385,8 @@ const Checkout = () => {
                           id="cc-cvv"
                           placeholder=""
                           required
+                          value={formData.cardCVV}
+                          onChange={handleChange}
                         />
                         <div className="invalid-feedback">
                           Security code required
@@ -403,7 +399,7 @@ const Checkout = () => {
                     <button
                       className="w-100 btn btn-primary "
                        type="submit"
-                        onClick={handleCheckout}
+              
                         disabled={isOrderPlaced}
                       >
                         Continue to checkout
