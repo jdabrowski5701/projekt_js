@@ -95,7 +95,7 @@ const Cart = () => {
                                     removeItem(item);
                                   }}
                                 >
-                                  <i className="bi bi-dash-lg">-</i>
+                                  <i className="bi bi-dash-lg"></i>
                                 </button>
 
                                 <p className="mx-5">{item.quantity}</p>
@@ -106,7 +106,7 @@ const Cart = () => {
                                     addItem(item);
                                   }}
                                 >
-                                  <i className="bi bi-plus-lg">+</i>
+                                  <i className="bi bi-plus-lg"></i>
                                 </button>
                               </div>
 
