@@ -1,68 +1,73 @@
 {
   "products": [
     {
-        "id": 1,
-        "title": "BROOKLYN hoodie",
-        "price": 109.95,
-        "description": "dark green, casual hoodie",
-        "category": "hoodies",
-        "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
-        "rating": {
-            "rate": 3.9,
-            "count": 120
-        }
+      "id": "1",
+      "title": "BROOKLYN hoodie",
+      "price": 109.95,
+      "description": "dark green, casual hoodie",
+      "category": "hoodies",
+      "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
+      "rating": {
+        "rate": 3.9,
+        "count": 120
+      }
     },
     {
-        "id": 2,
-        "title": "Men's bracelet",
-        "price": 22.3,
-        "description": "Slim-fitting style, sport style, silver, minimalistic.",
-        "category": "jewelery",
-        "image": "https://img.ltwebstatic.com/images3_spmp/2023/10/27/a5/16983938437fef9684888690d51ce6a2d3880bcb37.webp",
-        "rating": {
-            "rate": 4.1,
-            "count": 259
-        }
+      "id": "2",
+      "title": "Men's bracelet",
+      "price": 22.3,
+      "description": "Slim-fitting style, sport style, silver, minimalistic.",
+      "category": "jewelery",
+      "image": "https://img.ltwebstatic.com/images3_spmp/2023/10/27/a5/16983938437fef9684888690d51ce6a2d3880bcb37.webp",
+      "rating": {
+        "rate": 4.1,
+        "count": 259
+      }
     },
     {
-        "id": 3,
-        "title": "Men's 'A' bracelet",
-        "price": 50,		
-        "description": "Fashionable Simple Metallic Bold Alphabet Chain Bracelet For Men",
-        "category": "jewelery",
-        "image": "https://img.ltwebstatic.com/images3_spmp/2024/01/06/35/1704523215976e4dae026a00ebbe278a6a7a940dc3.webp",
-        "rating": {
-            "rate": 4.7,
-            "count": 500
-        }
+      "id": "3",
+      "title": "Men's 'A' bracelet",
+      "price": 50,
+      "description": "Fashionable Simple Metallic Bold Alphabet Chain Bracelet For Men",
+      "category": "jewelery",
+      "image": "https://img.ltwebstatic.com/images3_spmp/2024/01/06/35/1704523215976e4dae026a00ebbe278a6a7a940dc3.webp",
+      "rating": {
+        "rate": 4.7,
+        "count": 500
+      }
     },
     {
-        "id": 4,
-        "title": "Simple t-shirt",
-        "price": 74.33,
-        "description": "Hypemode Men's Random Contrast Dye Gradient Letter Print Short Sleeve T-Shirt",
-        "category": "shirts",
-        "image": "https://img.ltwebstatic.com/images3_pi/2024/01/08/24/1704710970c9ed14be4f1e02bb43ccb01b144ff98e.webp",
-        "rating": {
-            "rate": 2.1,
-            "count": 430
-        }
+      "id": "4",
+      "title": "Simple t-shirt",
+      "price": 74.33,
+      "description": "Hypemode Men's Random Contrast Dye Gradient Letter Print Short Sleeve T-Shirt",
+      "category": "shirts",
+      "image": "https://img.ltwebstatic.com/images3_pi/2024/01/08/24/1704710970c9ed14be4f1e02bb43ccb01b144ff98e.webp",
+      "rating": {
+        "rate": 2.1,
+        "count": 430
+      }
     },
     {
-        "id": 5,
-        "title": "Fashionable Men's Glasses Decoration Square",
-        "price": 2234,
-        "description": "very nice",
-        "category": "jewelery",
-        "image": "https://img.ltwebstatic.com/images3_spmp/2023/09/03/86/1693748188503d54e72db15918b67f870fdc03cff4.webp",
-        "rating": {
-            "rate": 4.6,
-            "count": 400
-        }
+      "id": "5",
+      "title": "Fashionable Men's Glasses Decoration Square",
+      "price": 2234,
+      "description": "very nice",
+      "category": "jewelery",
+      "image": "https://img.ltwebstatic.com/images3_spmp/2023/09/03/86/1693748188503d54e72db15918b67f870fdc03cff4.webp",
+      "rating": {
+        "rate": 4.6,
+        "count": 400
+      }
     }
   ],
   "users": [
+    {
+      "id": "ad3c",
+      "name": "Jas Fasola",
+      "email": "name@example.com",
+      "password": "password123!"
+    }
   ],
-  "orders": {
-  }
+  "orders": {}
 }
