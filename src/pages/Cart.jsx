@@ -13,9 +13,9 @@ const Cart = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-12 py-5 bg-light text-center">
-            <h4 className="p-3 display-5">Your Cart is Empty</h4>
+            <h4 className="p-3 display-5">Your cart is empty</h4>
             <Link to="/" className="btn  btn-outline-dark mx-4">
-              <i className="bi bi-arrow-left"></i> Continue Shopping
+              <i className="bi bi-arrow-left"></i> Continue shopping
             </Link>
           </div>
         </div>
