@@ -7,7 +7,7 @@ return (
         <div className="card bg-dark text-white border-0 mx-3">
           <img
             className="card-img img-fluid"
-            src="./main.jpg"
+            src="https://cdn.pixabay.com/photo/2013/11/14/12/34/neckties-210347_1280.jpg"
             alt="Card"
             style={{ objectFit: "cover", height: "500px", width: "100%" }}
           />
