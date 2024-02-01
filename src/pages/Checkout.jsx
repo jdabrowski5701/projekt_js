@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState }from "react";
 
 import { Link } from "react-router-dom";
 import { Nav } from "../components";
@@ -56,6 +56,11 @@ const Checkout = () => {
     );
   };
 
+  const handleChange = (ev) => {
+    setFormData({ ...formData, [ev.currentTarget.id]: ev.currentTarget.value });
+    setErrors({ ...errors, [ev.currentTarget.id]: "" });
+  };
+
   const ShowCheckout = () => {
     let subtotal = 0;
     let shipping = 15.0;
@@ -78,19 +83,6 @@ const Checkout = () => {
       UK: ["England", "Scotland", "Wales"],
       Denmark: ["Capital Region", "Central Denmark Region", "Southern Denmark"]
     };
-
-    const handleCountryChange = (e) => {
-      const selectedCountryValue = e.target.value;
-      setSelectedCountry(selectedCountryValue);
-      setSelectedState("");
-    };
-
-    const handleChange = (ev) => {
-      setFormData({ ...formData, [ev.target.id]: ev.target.value });
-      setErrors({ ...errors, [ev.target.id]: "" });
-    };
-
-
 
     const handleCheckout = (e) => {
       e.preventDefault();
@@ -116,13 +108,13 @@ const Checkout = () => {
         return;
       }
 
-      if (!selectedCountry) {
-        setErrors((prevErrors) => ({ ...prevErrors, country: "Please select a valid country" }));
+      if (!e.target.country.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, country: "Please enter country name" }));
         return;
       }
 
-      if (!selectedState) {
-        setErrors((prevErrors) => ({ ...prevErrors, state: "Please select a valid state/province" }));
+      if (!e.target.state.value.trim()) {
+        setErrors((prevErrors) => ({ ...prevErrors, state: "Please enter state name" }));
         return;
       }
 
@@ -157,6 +149,7 @@ const Checkout = () => {
 
       setIsOrderPlaced(true);
       dispatch(resetCart());
+      alert("order placed successfully!")
     };
 
 
@@ -204,7 +197,7 @@ const Checkout = () => {
                   <form onSubmit={handleCheckout}>
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
-                        <label for="firstName" className="form-label">
+                        <label htmlFor="firstName" className="form-label">
                           First name
                         </label>
                         <input
@@ -213,103 +206,136 @@ const Checkout = () => {
                           id="firstName"
                           placeholder=""
                           required
-                          value={formData.firstName}
-                          onChange={handleChange}
                         />
-                        {errors.firstName && (
+                          {errors.firstName && (
                           <div className="invalid-feedback">
-                            {errors.firstName}
+                              {errors.firstName}
                           </div>
-                        )}
+                          )}
                       </div>
 
                       <div className="col-sm-6 my-1">
-                        <label for="lastName" className="form-label">
+                        <label htmlFor="lastName" className="form-label">
                           Last name
                         </label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.lastName && "is-invalid"}`}
                           id="lastName"
                           placeholder=""
                           required
-                          value={formData.lastName}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Valid last name is required.
-                        </div>
+                          {errors.lastName && (
+                          <div className="invalid-feedback">
+                              {errors.lastName}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-12 my-1">
-                        <label for="email" className="form-label">
+                        <label htmlFor="email" className="form-label">
                           Email
                         </label>
                         <input
                           type="email"
-                          className="form-control"
+                          className={`form-control ${errors.email && "is-invalid"}`}
                           id="email"
                           placeholder="you@example.com"
                           required
-                          value={formData.email}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Please enter a valid email address for shipping
-                          updates.
-                        </div>
+                          {errors.email && (
+                          <div className="invalid-feedback">
+                              {errors.email}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-12 my-1">
-                        <label for="address" className="form-label">
+                        <label htmlFor="address" className="form-label">
                           Address
                         </label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.address && "is-invalid"}`}
                           id="address"
                           placeholder="Street 1234"
                           required
-                          value={formData.address}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Please enter your shipping address.
-                        </div>
+                          {errors.address && (
+                          <div className="invalid-feedback">
+                              {errors.address}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-12">
-                        <label for="address2" className="form-label">
+                        <label htmlFor="address2" className="form-label">
                           Address 2{" "}
                           <span className="text-muted">(Optional)</span>
                         </label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.address2 && "is-invalid"}`}
                           id="address2"
                           placeholder="Apartment or suite"
-                          value={formData.address2}
-                          onChange={handleChange}
                         />
+                          {errors.address2 && (
+                          <div className="invalid-feedback">
+                              {errors.address2}
+                          </div>
+                          )}
                       </div>
 
-
-                      <div className="col-md-3 my-1">
-                        <label for="zip" className="form-label">
-                          Zip
+                      <div className="col-md-5 my-1">
+                        <label htmlFor="country" className="form-label">
+                          Country
                         </label>
                         <input
                           type="text"
-                          className="form-control"
+                          className={`form-control ${errors.country && "is-invalid"}`}
+                          id="country"
+                          placeholder="Country"
+                        />
+                          {errors.country && (
+                          <div className="invalid-feedback">
+                              {errors.country}
+                          </div>
+                          )}
+                      </div>
+                      <div className="col-md-4 my-1">
+                        <label htmlFor="state" className="form-label">
+                          State
+                        </label>
+                        <br />
+                        <input
+                          type="text"
+                          className={`form-control ${errors.state && "is-invalid"}`}
+                          id="state"
+                          placeholder="State"
+                        />
+                          {errors.state && (
+                          <div className="invalid-feedback">
+                              {errors.state}
+                          </div>
+                          )}
+                      </div>
+
+                      <div className="col-md-3 my-1">
+                        <label htmlFor="zip" className="form-label">
+                          Zip
+                        </label>
+                        <input
+                          type="number"
+                          className={`form-control ${errors.zip && "is-invalid"}`}
                           id="zip"
                           placeholder=""
                           required
-                          value={formData.zip}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Zip code required.
-                        </div>
+                          {errors.zip && (
+                          <div className="invalid-feedback">
+                              {errors.zip}
+                          </div>
+                          )}
                       </div>
                     </div>
 
@@ -319,78 +345,78 @@ const Checkout = () => {
 
                     <div className="row gy-3">
                       <div className="col-md-6">
-                        <label for="cc-name" className="form-label">
+                        <label htmlFor="cardName" className="form-label">
                           Name on card
                         </label>
                         <input
                           type="text"
-                          className="form-control"
-                          id="cc-name"
+                          className={`form-control ${errors.cardName && "is-invalid"}`}
+                          id="cardName"
                           placeholder=""
                           required
-                          value={formData.cardName}
-                          onChange={handleChange}
                         />
                         <small className="text-muted">
                           Full name as displayed on card
                         </small>
-                        <div className="invalid-feedback">
-                          Name on card is required
-                        </div>
+                        {errors.cardName && (
+                          <div className="invalid-feedback">
+                              {errors.cardName}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-md-6">
-                        <label for="cc-number" className="form-label">
+                        <label htmlFor="cardNumber" className="form-label">
                           Credit card number
                         </label>
                         <input
                           type="text"
-                          className="form-control"
-                          id="cc-number"
+                          className={`form-control ${errors.cardNumber && "is-invalid"}`}
+                          id="cardNumber"
                           placeholder=""
                           required
-                          value={formData.cardNumber}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Credit card number is required
-                        </div>
+                        {errors.cardNumber && (
+                          <div className="invalid-feedback">
+                              {errors.cardNumber}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-md-3">
-                        <label for="cc-expiration" className="form-label">
+                        <label htmlFor="cardExpiration" className="form-label">
                           Expiration
                         </label>
                         <input
                           type="text"
-                          className="form-control"
-                          id="cc-expiration"
+                          className={`form-control ${errors.cardExpiration && "is-invalid"}`}
+                          id="cardExpiration"
                           placeholder=""
                           required
-                          value={formData.cardExpiration}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Expiration date required
-                        </div>
+                        {errors.cardExpiration && (
+                          <div className="invalid-feedback">
+                              {errors.cardExpiration}
+                          </div>
+                          )}
                       </div>
 
                       <div className="col-md-3">
-                        <label for="cc-cvv" className="form-label">
+                        <label htmlFor="cardCVV" className="form-label">
                           CVV
                         </label>
                         <input
                           type="text"
-                          className="form-control"
-                          id="cc-cvv"
+                          className={`form-control ${errors.cardCVV && "is-invalid"}`}
+                          id="cardCVV"
                           placeholder=""
                           required
-                          value={formData.cardCVV}
-                          onChange={handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Security code required
-                        </div>
+                        {errors.cardCVV && (
+                          <div className="invalid-feedback">
+                              {errors.cardCVV}
+                          </div>
+                          )}
                       </div>
                     </div>
 
@@ -398,8 +424,7 @@ const Checkout = () => {
 
                     <button
                       className="w-100 btn btn-primary "
-                       type="submit"
-              
+                        type="submit"
                         disabled={isOrderPlaced}
                       >
                         Continue to checkout
