@@ -120,6 +120,55 @@
         "cardCVV": "123"
       },
       "totalAmount": 125
+    },
+    {
+      "id": "78bd",
+      "user_email": "test@test.com",
+      "items": [
+        {
+          "id": "1",
+          "title": "BROOKLYN hoodie",
+          "price": 109.95,
+          "description": "dark green, casual hoodie",
+          "category": "hoodies",
+          "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
+          "rating": {
+            "rate": 3.9,
+            "count": 120
+          },
+          "quantity": 1
+        },
+        {
+          "id": "2",
+          "title": "Men's bracelet",
+          "price": 22.3,
+          "description": "Slim-fitting style, sport style, silver, minimalistic.",
+          "category": "jewelery",
+          "image": "https://img.ltwebstatic.com/images3_spmp/2023/10/27/a5/16983938437fef9684888690d51ce6a2d3880bcb37.webp",
+          "rating": {
+            "rate": 4.1,
+            "count": 259
+          },
+          "quantity": 1
+        }
+      ],
+      "billing_address": {
+        "firstName": "jan",
+        "lastName": "kowal",
+        "email": "test@test.com",
+        "address": "aaaa 12",
+        "address2": "1 ",
+        "country": "Polska",
+        "state": "War",
+        "zip": "123"
+      },
+      "payment_details": {
+        "cardName": "Jan Kowal",
+        "cardNumber": "1111222233334444",
+        "cardExpiration": "12/12",
+        "cardCVV": "123"
+      },
+      "totalAmount": 147
     }
   ]
 }

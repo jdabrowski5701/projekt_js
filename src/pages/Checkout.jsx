@@ -169,7 +169,7 @@ const Checkout = () => {
           },
         });
 
-        if (response.status === 200) {
+        if (response.status != 404) {
           setIsOrderPlaced(true);
           dispatch(resetCart());
           alert("Order placed successfully!");
