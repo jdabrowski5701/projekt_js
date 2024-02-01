@@ -1,18 +1,27 @@
-import React, { useState }from "react";
+import React, { useState, useEffect } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../components";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { resetCart } from "../redux/action/index.js";
+import axios from "axios";
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   
+
+  useEffect(() => {
+    const userEmail = sessionStorage.getItem("email");
+
+    if (!userEmail) {
+      navigate("/login");
+    }
+  });
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -56,10 +65,6 @@ const Checkout = () => {
     );
   };
 
-  const handleChange = (ev) => {
-    setFormData({ ...formData, [ev.currentTarget.id]: ev.currentTarget.value });
-    setErrors({ ...errors, [ev.currentTarget.id]: "" });
-  };
 
   const ShowCheckout = () => {
     let subtotal = 0;
@@ -73,18 +78,8 @@ const Checkout = () => {
       return (totalItems += item.quantity);
     });
 
-    const countries = ["Poland", "Germany", "France", "Spain", "UK", "Denmark"];
 
-    const statesByCountry = {
-      Poland: ["Podlasie", "Wielkopolska", "Mazowsze"],
-      Germany: ["Bavaria", "North Rhine-Westphalia", "Baden-Württemberg"],
-      France: ["Île-de-France", "Provence-Alpes-Côte d'Azur", "Auvergne-Rhône-Alpes"],
-      Spain: ["Catalonia", "Andalusia", "Madrid"],
-      UK: ["England", "Scotland", "Wales"],
-      Denmark: ["Capital Region", "Central Denmark Region", "Southern Denmark"]
-    };
-
-    const handleCheckout = (e) => {
+    const handleCheckout = async (e) => {
       e.preventDefault();
 
       if (!e.target.firstName.value.trim()) {
@@ -147,9 +142,46 @@ const Checkout = () => {
         return;
       }
 
-      setIsOrderPlaced(true);
-      dispatch(resetCart());
-      alert("order placed successfully!")
+      const orderDetails = {
+        user_email: sessionStorage.getItem("email"),
+        items: state,
+        billing_address: {
+          firstName: e.target.firstName.value,
+          lastName: e.target.lastName.value,
+          email: e.target.email.value,
+          address: e.target.address.value,
+          address2: e.target.address2.value,
+          country: e.target.country.value,
+          state: e.target.state.value,
+          zip: e.target.zip.value,
+        },
+        payment_details: {
+          cardName: e.target.cardName.value,
+          cardNumber: e.target.cardNumber.value,
+          cardExpiration: e.target.cardExpiration.value,
+          cardCVV: e.target.cardCVV.value,
+        },
+        totalAmount: Math.round(subtotal + shipping),
+      };
+
+      try {
+        const response = await axios.post("http://localhost:8000/orders", orderDetails, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.status === 200) {
+          setIsOrderPlaced(true);
+          dispatch(resetCart());
+          alert("Order placed successfully!");
+        } else {
+          alert("Failed to place the order. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error sending order details:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     };
 
 

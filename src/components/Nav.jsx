@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Nav = () => {
   const state = useSelector(state => state.handleCart);
+  const email = sessionStorage.getItem('email');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+  }, []);
+
+  
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,15 +52,26 @@ const Nav = () => {
           </ul>
 
           <div className="buttons text-center">
-            <NavLink to="/login" className="btn btn-outline-dark m-2">
-              <i className="bi bi-person-fill-up mr-1"></i> Login
-            </NavLink>
-            <NavLink to="/register" className="btn btn-outline-dark m-2">
-              <i className="bi bi-person-plus-fill mr-1"></i> Register
-            </NavLink>
-            <NavLink to="/cart" className="btn btn-outline-dark m-2">
-              <i className="bi bi-cart3 mr-1"></i> Cart ({state.length})
-            </NavLink>
+            {email ? (
+              <>
+                <p className="m-2">Hello {email}</p>
+                <NavLink to="/cart" className="btn btn-outline-dark m-2">
+                  <i className="bi bi-cart3 mr-1"></i> Cart ({state.length})
+                </NavLink>
+                <button onClick={handleLogout} className="btn btn-outline-dark m-2">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className="btn btn-outline-dark m-2">
+                  <i className="bi bi-person-fill-up mr-1"></i> Login
+                </NavLink>
+                <NavLink to="/register" className="btn btn-outline-dark m-2">
+                  <i className="bi bi-person-plus-fill mr-1"></i> Register
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </div>
