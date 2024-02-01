@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../components";
+import { SHA256 } from "crypto-js";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -48,25 +49,29 @@ const Login = () => {
     }
 
     if (valid) {
-        fetch("http://localhost:8000/users?email="+formData.email).then((res) => {
-          return res.json();
-        }).then((resp) => {
-          console.log(resp);
-          if (Object.keys(resp).length === 0){
-            alert('Please enter valid email')
-          }else{
-            console.log(formData.password);
-            if(resp[0].password == formData.password){
-              alert('Success');
-              sessionStorage.setItem('email', formData.email);
-              navigate('/')
-            }else{
-              alert('Please enter valid data')
-            }
+      try {
+          const hashedPassword = SHA256(formData.password).toString();
+
+          const response = await fetch("http://localhost:8000/users?email=" + formData.email);
+          const userData = await response.json();
+
+          if (Object.keys(userData).length === 0) {
+              alert('Please enter a valid email');
+          } else {
+              if (userData[0].password === hashedPassword) {
+                  alert('Success');
+                  sessionStorage.setItem('email', formData.email);
+                  navigate('/');
+              } else {
+                  alert('Please enter valid data');
+              }
           }
-        });
+      } catch (error) {
+          console.error(error);
+          alert('Login failed');
       }
     }
+  }
 
   return (
     <>
