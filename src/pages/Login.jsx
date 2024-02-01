@@ -48,22 +48,23 @@ const Login = () => {
     }
 
     if (valid) {
-      try {
-        const response = await axios.post("YOUR_BACKEND_API_LOGIN_ENDPOINT", {
-          email: formData.email,
-          password: formData.password,
+        fetch("http://localhost:8000/users?email="+formData.email).then((res) => {
+          return res.json();
+        }).then((resp) => {
+          if (Object.keys(resp).length === 0){
+            alert('Please enter valid email')
+          }else{
+            if(resp.password == formData.password){
+              alert('Success');
+              sessionStorage.setItem('email', formData.email);
+              navigate('/')
+            }else{
+              alert('Please enter valid data')
+            }
+          }
         });
-
-        const { token } = response.data;
-        localStorage.setItem("jwtToken", token);
-        navigate("/");
-      } catch (error) {
-        alert("Login failed!");
-
-        // Handle login failure, display error message, etc.
       }
     }
-  };
 
   return (
     <>
@@ -74,24 +75,28 @@ const Login = () => {
         <div className="row my-4 h-100">
           <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
             <form onSubmit={handleSubmit}>
-              <div className="my-3">
-              <label htmlFor="floatingInput">Email address</label>
-                <input
-                  type="email"
-                  className={`form-control ${errors.email && "is-invalid"}`}
-                  id="floatingInput"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="my-3">
-              <label htmlFor="floatingPassword display-4">Password</label>
-                <input
-                  type="password"
-                  className={`form-control ${errors.password && "is-invalid"}`}
-                  id="floatingPassword"
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="form my-3">
+                                <label htmlFor="email">Email address</label>
+                                <input
+                                    type="email"
+                                    className={`form-control ${errors.email && "is-invalid"}`}
+                                    id="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
+                                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                            </div>
+                            <div className="form  my-3">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    type="password"
+                                    className={`form-control ${errors.password && "is-invalid"}`}
+                                    id="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                />
+                                {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                            </div>
               <div className="my-3">
                 <p>New Here? <Link to="/register" className="text-decoration-underline text-info">Register</Link> </p>
               </div>
