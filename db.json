@@ -80,7 +80,46 @@
       "email": "test@test.com",
       "password": "test123!"
     }
-
   ],
-  "orders": {}
+  "orders": [
+    {
+      "id": "9681"
+    },
+    {
+      "id": "a83a",
+      "user_email": "test@test.com",
+      "items": [
+        {
+          "id": "1",
+          "title": "BROOKLYN hoodie",
+          "price": 109.95,
+          "description": "dark green, casual hoodie",
+          "category": "hoodies",
+          "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
+          "rating": {
+            "rate": 3.9,
+            "count": 120
+          },
+          "quantity": 1
+        }
+      ],
+      "billing_address": {
+        "firstName": "Jan",
+        "lastName": "Kowalski",
+        "email": "kuba2791@spoko.pl",
+        "address": "Pułkowa 5/31",
+        "address2": "12",
+        "country": "Polska",
+        "state": "Podlasie",
+        "zip": "123"
+      },
+      "payment_details": {
+        "cardName": "Jan Kowal",
+        "cardNumber": "1111222233334444",
+        "cardExpiration": "12/12",
+        "cardCVV": "123"
+      },
+      "totalAmount": 125
+    }
+  ]
 }
