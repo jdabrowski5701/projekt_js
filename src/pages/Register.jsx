@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../components";
+import { SHA256 } from "crypto-js";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -66,10 +67,12 @@ const Register = () => {
 
         if (valid) {
             try {
+                const hashedPassword = SHA256(formData.password).toString();
+
               const response = await axios.post("http://localhost:8000/users", {
                 name: formData.name,
                 email: formData.email,
-                password: formData.password,
+                password: hashedPassword,
               });
       
               const { token } = response.data;
