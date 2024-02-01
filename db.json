@@ -79,96 +79,50 @@
       "name": "Test",
       "email": "test@test.com",
       "password": "test123!"
+    },
+    {
+      "id": "0b83",
+      "name": "Tester",
+      "email": "tester@tester.com",
+      "password": "627238f267785126ddb2cfd6b71aefb1ec2651077fb4d4bdfb7eb482d27c072e"
     }
   ],
   "orders": [
     {
-      "id": "9681"
-    },
-    {
-      "id": "a83a",
-      "user_email": "test@test.com",
+      "id": "c1cd",
+      "user_email": "tester@tester.com",
       "items": [
         {
-          "id": "1",
-          "title": "BROOKLYN hoodie",
-          "price": 109.95,
-          "description": "dark green, casual hoodie",
-          "category": "hoodies",
-          "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
-          "rating": {
-            "rate": 3.9,
-            "count": 120
-          },
-          "quantity": 1
-        }
-      ],
-      "billing_address": {
-        "firstName": "Jan",
-        "lastName": "Kowalski",
-        "email": "kuba2791@spoko.pl",
-        "address": "Pułkowa 5/31",
-        "address2": "12",
-        "country": "Polska",
-        "state": "Podlasie",
-        "zip": "123"
-      },
-      "payment_details": {
-        "cardName": "Jan Kowal",
-        "cardNumber": "1111222233334444",
-        "cardExpiration": "12/12",
-        "cardCVV": "123"
-      },
-      "totalAmount": 125
-    },
-    {
-      "id": "78bd",
-      "user_email": "test@test.com",
-      "items": [
-        {
-          "id": "1",
-          "title": "BROOKLYN hoodie",
-          "price": 109.95,
-          "description": "dark green, casual hoodie",
-          "category": "hoodies",
-          "image": "https://img.ltwebstatic.com/images3_pi/2023/05/18/1684395226b899a4697f02777aa9c88c1354ad4bcc.webp",
-          "rating": {
-            "rate": 3.9,
-            "count": 120
-          },
-          "quantity": 1
-        },
-        {
-          "id": "2",
-          "title": "Men's bracelet",
-          "price": 22.3,
-          "description": "Slim-fitting style, sport style, silver, minimalistic.",
+          "id": "3",
+          "title": "Men's 'A' bracelet",
+          "price": 50,
+          "description": "Fashionable Simple Metallic Bold Alphabet Chain Bracelet For Men",
           "category": "jewelery",
-          "image": "https://img.ltwebstatic.com/images3_spmp/2023/10/27/a5/16983938437fef9684888690d51ce6a2d3880bcb37.webp",
+          "image": "https://img.ltwebstatic.com/images3_spmp/2024/01/06/35/1704523215976e4dae026a00ebbe278a6a7a940dc3.webp",
           "rating": {
-            "rate": 4.1,
-            "count": 259
+            "rate": 4.7,
+            "count": 500
           },
           "quantity": 1
         }
       ],
       "billing_address": {
-        "firstName": "jan",
-        "lastName": "kowal",
-        "email": "test@test.com",
-        "address": "aaaa 12",
-        "address2": "1 ",
-        "country": "Polska",
-        "state": "War",
-        "zip": "123"
+        "firstName": "test",
+        "lastName": "test",
+        "email": "tester@tester.com",
+        "address": "Testowa 41",
+        "address2": "12",
+        "country": "Polandia",
+        "state": "Opolskie",
+        "zip": "1234"
       },
       "payment_details": {
-        "cardName": "Jan Kowal",
+        "cardName": "Tester testowy",
         "cardNumber": "1111222233334444",
-        "cardExpiration": "12/12",
+        "cardExpiration": "12/29",
         "cardCVV": "123"
       },
-      "totalAmount": 147
+      "totalAmount": 65
     }
   ]
 }

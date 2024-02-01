@@ -169,15 +169,16 @@ const Checkout = () => {
           },
         });
 
-        if (response.status != 404) {
+        if (response.status == 201) {
           setIsOrderPlaced(true);
           dispatch(resetCart());
           alert("Order placed successfully!");
         } else {
           alert("Failed to place the order. Please try again.");
+          
         }
       } catch (error) {
-        console.error("Error sending order details:", error);
+
         alert("An unexpected error occurred. Please try again later.");
       }
     };
