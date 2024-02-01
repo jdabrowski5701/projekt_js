@@ -51,10 +51,12 @@ const Login = () => {
         fetch("http://localhost:8000/users?email="+formData.email).then((res) => {
           return res.json();
         }).then((resp) => {
+          console.log(resp);
           if (Object.keys(resp).length === 0){
             alert('Please enter valid email')
           }else{
-            if(resp.password == formData.password){
+            console.log(formData.password);
+            if(resp[0].password == formData.password){
               alert('Success');
               sessionStorage.setItem('email', formData.email);
               navigate('/')
@@ -76,27 +78,27 @@ const Login = () => {
           <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
             <form onSubmit={handleSubmit}>
             <div className="form my-3">
-                                <label htmlFor="email">Email address</label>
-                                <input
-                                    type="email"
-                                    className={`form-control ${errors.email && "is-invalid"}`}
-                                    id="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-                            </div>
-                            <div className="form  my-3">
-                                <label htmlFor="password">Password</label>
-                                <input
-                                    type="password"
-                                    className={`form-control ${errors.password && "is-invalid"}`}
-                                    id="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                                {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-                            </div>
+               <label htmlFor="email">Email address</label>
+               <input
+                   type="email"
+                   className={`form-control ${errors.email && "is-invalid"}`}
+                   id="email"
+                   value={formData.email}
+                   onChange={handleChange}
+               />
+               {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+           </div>
+           <div className="form  my-3">
+               <label htmlFor="password">Password</label>
+               <input
+                   type="password"
+                   className={`form-control ${errors.password && "is-invalid"}`}
+                   id="password"
+                   value={formData.password}
+                   onChange={handleChange}
+               />
+               {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+           </div>
               <div className="my-3">
                 <p>New Here? <Link to="/register" className="text-decoration-underline text-info">Register</Link> </p>
               </div>
