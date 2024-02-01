@@ -63,28 +63,22 @@
   ],
   "users": [
     {
-      "id": "ad3c",
-      "name": "Jas Fasola",
-      "email": "name@example.com",
-      "password": "password123!"
-    },
-    {
-      "id": "2972",
-      "name": "Jan Kowalski",
-      "email": "jankowal@gmail.com",
-      "password": "password123!"
-    },
-    {
-      "id": "4f6a",
-      "name": "Test",
-      "email": "test@test.com",
-      "password": "test123!"
-    },
-    {
       "id": "0b83",
       "name": "Tester",
       "email": "tester@tester.com",
       "password": "627238f267785126ddb2cfd6b71aefb1ec2651077fb4d4bdfb7eb482d27c072e"
+    },
+    {
+      "id": "ed84",
+      "name": "Mr Worldwide",
+      "email": "igorekxco@onet.pl",
+      "password": "f08f3b85d40e9e284fa3e6aac749be2fabaf15688542a773ebfbb7348cdc788a"
+    },
+    {
+      "id": "a69c",
+      "name": "Janek Kot",
+      "email": "lubieplacki@wp.pl",
+      "password": "8a7a3258fa61d95bc3dd0d9603738fdd4591e233a4d39f7fbd347dcad145b0ed"
     }
   ],
   "orders": [
