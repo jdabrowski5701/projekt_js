@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { resetCart } from "../redux/action/index.js";
 import axios from "axios";
-
 const Checkout = () => {
   const navigate = useNavigate();
   const state = useSelector((state) => state.handleCart);
@@ -163,7 +162,6 @@ const Checkout = () => {
         },
         totalAmount: Math.round(subtotal + shipping),
       };
-
       try {
         const response = await axios.post("http://localhost:8000/orders", orderDetails, {
           headers: {
@@ -171,7 +169,7 @@ const Checkout = () => {
           },
         });
 
-        if (response.status === 200) {
+        if (response.status != 404) {
           setIsOrderPlaced(true);
           dispatch(resetCart());
           alert("Order placed successfully!");
